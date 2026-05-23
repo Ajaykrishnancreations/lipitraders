@@ -4,6 +4,7 @@ import { MessageCircle, ChevronRight, Shield } from "lucide-react";
 import { COMPANY, HERO_VISUAL } from "../../data/site";
 import { Sparks, FloatingParticles, SpinningGear } from "./Sparks";
 import { useLanguage } from "../../hooks/useLanguage";
+import JobImg from "../../assets/job.jpeg";
 
 const Hero = () => {
   const { t } = useLanguage();

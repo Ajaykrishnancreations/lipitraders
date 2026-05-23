@@ -4,6 +4,7 @@ import { CheckCircle2, ArrowRight } from "lucide-react";
 import { SERVICE_SELL_IMG } from "../../data/site";
 import { SpinningGear, Sparks } from "./Sparks";
 import { useLanguage } from "../../hooks/useLanguage";
+import PremiumCoils from "../../assets/premiumsteelcoils.jpeg";
 
 const Services = () => {
   const { t } = useLanguage();
@@ -115,7 +116,7 @@ const Services = () => {
               viewport={{ once: true }} transition={{ duration: 0.7 }}
               className="relative w-full h-full glass border-2 border-white/10 overflow-hidden img-zoom"
             >
-              <img src={SERVICE_SELL_IMG} alt="Premium steel coils" className="absolute inset-0 w-full h-full object-cover" />
+              <img src={PremiumCoils} alt="Premium Steel Coils" className="absolute inset-0 w-full h-full object-cover" />
               <div className="absolute inset-0 bg-gradient-to-tr from-[#050507]/80 via-transparent to-transparent" />
               <div className="absolute top-4 right-4 glass-strong px-4 py-3 border-r-2 border-[#FF5722]">
                 <div className="font-heading text-xl tracking-widest text-[#FF5722]">{t.services.sell.tag}</div>

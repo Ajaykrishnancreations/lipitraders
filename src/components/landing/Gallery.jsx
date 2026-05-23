@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { motion } from "framer-motion";
-import { GALLERY_IMAGES } from "../../data/site";
+import { GALLERY_IMAGES} from "../../data/site";
 import { useLanguage } from "../../hooks/useLanguage";
 
 const Gallery = () => {

@@ -4,6 +4,7 @@ import { Menu, X, Phone } from "lucide-react";
 import { COMPANY } from "../../data/site";
 import { useLanguage } from "../../hooks/useLanguage";
 import SettingsMenu from "./SettingsMenu";
+import Logo from "../../assets/LipitradersLogo.png";
 
 const Navbar = () => {
   const [scrolled, setScrolled] = useState(false);
@@ -25,6 +26,25 @@ const Navbar = () => {
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
 
+  // Smooth navigate helper for mobile menu (prevents unmount/navigation race)
+  const handleNavigate = (href) => {
+    // If it's an external link or not a hash, just navigate and close
+    if (!href || !href.startsWith("#")) {
+      setOpen(false);
+      window.location.href = href;
+      return;
+    }
+    const id = href.slice(1);
+    const el = document.getElementById(id);
+    if (el) {
+      el.scrollIntoView({ behavior: "smooth", block: "start" });
+    } else {
+      // fallback to set hash
+      window.location.hash = href;
+    }
+    setOpen(false);
+  };
+
   return (
     <motion.header
       initial={{ y: -80, opacity: 0 }}
@@ -36,14 +56,20 @@ const Navbar = () => {
       }`}
     >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-10 flex items-center justify-between">
-        <a href="#home" data-testid="nav-logo" className="flex items-center gap-3 group">
+        <a
+          href="#home"
+          data-testid="nav-logo"
+          className="flex items-center gap-3 group"
+        >
           <img
-            src={COMPANY.logoUrl}
+            src={Logo}
             alt="Lipi Traders"
             className="h-12 w-12 sm:h-14 sm:w-14 object-contain drop-shadow-[0_0_12px_rgba(212,164,55,0.35)] group-hover:drop-shadow-[0_0_20px_rgba(255,87,34,0.5)] transition-all"
           />
           <div className="hidden sm:block leading-tight">
-            <div className="font-heading text-2xl text-gold-metallic tracking-widest">LIPI TRADERS</div>
+            <div className="font-heading text-2xl text-gold-metallic tracking-widest">
+              LIPI TRADERS
+            </div>
             <div className="text-[10px] tracking-[0.3em] text-gray-400 font-semibold">
               IRON · SCRAP · STEEL
             </div>
@@ -99,7 +125,11 @@ const Navbar = () => {
                   key={i}
                   href={l.href}
                   data-testid={`nav-mobile-link-${i}`}
-                  onClick={() => setOpen(false)}
+                  // prevent default navigation and perform smooth scroll, then close
+                  onClick={(e) => {
+                    e.preventDefault();
+                    handleNavigate(l.href);
+                  }}
                   initial={{ x: -20, opacity: 0 }}
                   animate={{ x: 0, opacity: 1 }}
                   transition={{ delay: i * 0.05 }}
