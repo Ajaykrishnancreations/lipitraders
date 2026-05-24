@@ -34,15 +34,19 @@ const Navbar = () => {
       window.location.href = href;
       return;
     }
+
     const id = href.slice(1);
-    const el = document.getElementById(id);
-    if (el) {
-      el.scrollIntoView({ behavior: "smooth", block: "start" });
-    } else {
-      // fallback to set hash
-      window.location.hash = href;
-    }
     setOpen(false);
+
+    // Close the mobile menu first, then scroll after layout settles.
+    setTimeout(() => {
+      const el = document.getElementById(id);
+      if (el) {
+        el.scrollIntoView({ behavior: "smooth", block: "start" });
+      } else {
+        window.location.hash = href;
+      }
+    }, 50);
   };
 
   return (
