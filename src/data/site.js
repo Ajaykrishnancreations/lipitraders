@@ -17,8 +17,7 @@ export const COMPANY = {
   city: "Coimbatore",
   address:
     "214/1P, Anjugam Nagar, Chinnavedampatti, Coimbatore – 641049",
-  email: "sivakumar@lipi-traders.com",
-  emailAlt: "kumarsivakumar158@gmail.com",
+  email: "sivakumar@lipi-traders.com, kumarsivakumar158@gmail.com",
   phone: "+91 96555 87877",
   phoneRaw: "+919655587877",
   whatsapp: "919655587877",
@@ -145,23 +144,23 @@ export const HERO = {
 export const GALLERY_IMAGES = [
   {
     src: image1,
-    caption: "Gallery image 1",
+    caption: "Industrial Scrap Collection",
   },
   {
     src: image2,
-    caption: "Gallery image 2",
+    caption: "Premium Steel Turnings",
   },
   {
     src: image3,
-    caption: "Gallery image 3",
+    caption: "Processed Iron Scrap",
   },
   {
     src: image4,
-    caption: "Gallery image 4",
+    caption: "Structural Steel Scrap",
   },
   {
     src: image5,
-    caption: "Gallery image 5",
+    caption: "Bulk Scrap Storage",
   },
 ];
 
@@ -178,26 +177,26 @@ export const SERVICES = [
   },
   {
     id: 2,
-    title: "Coils Supply",
+    title: "Premium Steel Turnings",
     image: image2,
-    desc: "Premium quality steel coils supplied for industrial requirements.",
+    desc: "Premium steel turnings and steel shaving material supplied for industrial use.",
   },
   {
     id: 3,
-    title: "Steel Processing",
+    title: "Processed Iron Scrap",
     image: image3,
-    desc: "Advanced steel processing and furnace operations with quality assurance.",
+    desc: "Clean, sorted and processed iron scrap ready for industrial consumption.",
   },
   {
     id: 4,
-    title: "Heavy Equipment Scrap",
+    title: "Structural Steel Scrap",
     image: image4,
-    desc: "Handling and recycling of heavy machinery and industrial equipment.",
+    desc: "Cut steel sections and structural scrap handled with reliable sourcing.",
   },
   {
     id: 5,
-    title: "Iron Stockyard Management",
+    title: "Bulk Scrap Storage",
     image: image5,
-    desc: "Well-organized iron stockyard with efficient material segregation.",
+    desc: "Safe bulk stockyard storage and organized scrap handling solutions.",
   },
 ];

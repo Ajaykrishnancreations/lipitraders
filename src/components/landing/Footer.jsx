@@ -62,12 +62,10 @@ const Footer = () => {
                 <MapPin className="text-[#FF5722] shrink-0 mt-0.5" size={16} />
                 <span className="leading-relaxed">{COMPANY.address}</span>
               </div>
-              {[COMPANY.email, COMPANY.emailAlt].filter(Boolean).map((email) => (
-                <a key={email} href={`mailto:${email}`} className="flex gap-3 hover:text-[#FF5722] transition-colors">
-                  <Mail className="text-[#FF5722] shrink-0 mt-0.5" size={16} />
-                  <span>{email}</span>
-                </a>
-              ))}
+              <a href={`mailto:${COMPANY.email}`} className="flex gap-3 hover:text-[#FF5722] transition-colors">
+                <Mail className="text-[#FF5722] shrink-0 mt-0.5" size={16} />
+                <span>{COMPANY.email}</span>
+              </a>
               <a href={`tel:${COMPANY.phoneRaw}`} className="flex gap-3 hover:text-[#FF5722] transition-colors">
                 <Phone className="text-[#FF5722] shrink-0 mt-0.5" size={16} />
                 <span>{COMPANY.phone}</span>
