@@ -2,14 +2,11 @@
 
 // Local asset imports
 import Logo from "../assets/LipitradersLogo.png";
-import IndustrialScrapLoading from "../assets/industrialScraploading.png";
-import SteelFurnaceOperations from "../assets/steelfurnaceoperations.jpeg";
-import PremiumSteelCoils from "../assets/premiumsteelcoils.jpeg";
-import HeavyCrane from "../assets/heavycraneoperations.jpeg";
-import SortedIron from "../assets/Sortedironstockyard.jpeg";
-import MachineryScrapyard from "../assets/machineryscrapyard.jpg";
-import IndustrialWasteHandling from "../assets/industrialwastehadling.jpeg";
-import MoltenSteelPouring from "../assets/moltensteelpouring.jpg";
+import image1 from "../assets/image1.jpeg";
+import image2 from "../assets/image2.jpeg";
+import image3 from "../assets/image3.jpeg";
+import image4 from "../assets/image4.jpeg";
+import image5 from "../assets/image5.jpeg";
 import JobImg from "../assets/job.jpeg";
 
 export const COMPANY = {
@@ -21,6 +18,7 @@ export const COMPANY = {
   address:
     "214/1P, Anjugam Nagar, Chinnavedampatti, Coimbatore – 641049",
   email: "sivakumar@lipi-traders.com",
+  emailAlt: "kumarsivakumar158@gmail.com",
   phone: "+91 96555 87877",
   phoneRaw: "+919655587877",
   whatsapp: "919655587877",
@@ -146,99 +144,60 @@ export const HERO = {
 // Main gallery images
 export const GALLERY_IMAGES = [
   {
-    src: IndustrialScrapLoading,
-    caption: "Industrial scrap loading",
+    src: image1,
+    caption: "Gallery image 1",
   },
   {
-    src: SteelFurnaceOperations,
-    caption: "Steel furnace operations",
+    src: image2,
+    caption: "Gallery image 2",
   },
   {
-    src: PremiumSteelCoils,
-    caption: "Premium steel coils",
+    src: image3,
+    caption: "Gallery image 3",
   },
   {
-    src: HeavyCrane,
-    caption: "Heavy crane operations",
+    src: image4,
+    caption: "Gallery image 4",
   },
   {
-    src: SortedIron,
-    caption: "Sorted iron stockyard",
-  },
-  {
-    src: MachineryScrapyard,
-    caption: "Machinery at scrapyard",
-  },
-  {
-    src: IndustrialWasteHandling,
-    caption: "Industrial waste handling",
-  },
-  {
-    src: MoltenSteelPouring,
-    caption: "Molten steel pouring",
+    src: image5,
+    caption: "Gallery image 5",
   },
 ];
 
 // Export YARD_IMAGES so components (Gallery.jsx) can import it
-export const YARD_IMAGES = [
-  IndustrialScrapLoading,
-  SteelFurnaceOperations,
-  PremiumSteelCoils,
-  HeavyCrane,
-  SortedIron,
-  MachineryScrapyard,
-  IndustrialWasteHandling,
-  MoltenSteelPouring,
-];
+export const YARD_IMAGES = [image1, image2, image3, image4, image5];
 
 // Services
 export const SERVICES = [
   {
     id: 1,
     title: "Industrial Scrap Collection",
-    image: IndustrialScrapLoading,
+    image: image1,
     desc: "Efficient scrap collection and transportation services for industries.",
   },
   {
     id: 2,
     title: "Coils Supply",
-    image: PremiumSteelCoils,
+    image: image2,
     desc: "Premium quality steel coils supplied for industrial requirements.",
   },
   {
     id: 3,
     title: "Steel Processing",
-    image: SteelFurnaceOperations,
+    image: image3,
     desc: "Advanced steel processing and furnace operations with quality assurance.",
   },
   {
     id: 4,
     title: "Heavy Equipment Scrap",
-    image: HeavyCrane,
+    image: image4,
     desc: "Handling and recycling of heavy machinery and industrial equipment.",
   },
   {
     id: 5,
     title: "Iron Stockyard Management",
-    image: SortedIron,
+    image: image5,
     desc: "Well-organized iron stockyard with efficient material segregation.",
-  },
-  {
-    id: 6,
-    title: "Machinery Scrap Handling",
-    image: MachineryScrapyard,
-    desc: "Safe dismantling and processing of machinery scrap materials.",
-  },
-  {
-    id: 7,
-    title: "Industrial Waste Handling",
-    image: IndustrialWasteHandling,
-    desc: "Eco-friendly industrial waste management and recycling solutions.",
-  },
-  {
-    id: 8,
-    title: "Molten Steel Operations",
-    image: MoltenSteelPouring,
-    desc: "Professional molten steel handling and metal recovery operations.",
   },
 ];

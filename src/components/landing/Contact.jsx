@@ -147,15 +147,17 @@ const Contact = () => {
                   </div>
                 </div>
 
-                <a href={`mailto:${COMPANY.email}`} data-testid="info-email" className="flex gap-4 group">
-                  <div className="h-10 w-10 shrink-0 grid place-items-center bg-[#FF5722]/10 border border-[#FF5722]/30">
-                    <Mail className="text-[#FF5722]" size={18} />
-                  </div>
-                  <div>
-                    <div className="text-[10px] tracking-[0.3em] uppercase font-semibold text-gray-500 mb-1">{t.contact.infoEmail}</div>
-                    <div className="text-sm text-gray-300 group-hover:text-[#FF5722] transition-colors">{COMPANY.email}</div>
-                  </div>
-                </a>
+                {[COMPANY.email, COMPANY.emailAlt].filter(Boolean).map((email, index) => (
+                  <a key={email} href={`mailto:${email}`} data-testid={index === 0 ? "info-email" : "info-email-alt"} className="flex gap-4 group">
+                    <div className="h-10 w-10 shrink-0 grid place-items-center bg-[#FF5722]/10 border border-[#FF5722]/30">
+                      <Mail className="text-[#FF5722]" size={18} />
+                    </div>
+                    <div>
+                      <div className="text-[10px] tracking-[0.3em] uppercase font-semibold text-gray-500 mb-1">{t.contact.infoEmail}</div>
+                      <div className="text-sm text-gray-300 group-hover:text-[#FF5722] transition-colors">{email}</div>
+                    </div>
+                  </a>
+                ))}
 
                 <a href={`tel:${COMPANY.phoneRaw}`} data-testid="info-phone" className="flex gap-4 group">
                   <div className="h-10 w-10 shrink-0 grid place-items-center bg-[#FF5722]/10 border border-[#FF5722]/30">
