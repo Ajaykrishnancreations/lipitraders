@@ -122,9 +122,8 @@ export const TRANSLATIONS = {
       h1: "From our", h2: "yard", h3: "floor.",
       sub: "A look inside our operations — sorting, loading, weighing, and shipping industrial metals every day.",
       captions: [
-        "Industrial Scrap Loading", "Steel Furnace Operations", "Premium Steel Coils",
-        "Heavy Crane Operations", "Sorted Iron Stockyard", "Machinery Scrap Yard",
-        "Industrial Waste Handling", "Molten Steel Pouring",
+        "Industrial Scrap Collection", "Premium Steel Turnings", "Processed Iron Scrap",
+        "Structural Steel Scrap", "Bulk Scrap Storage",
       ],
     },
     contact: {
@@ -286,9 +285,8 @@ export const TRANSLATIONS = {
       h1: "எங்கள்", h2: "முற்றத்தின்", h3: "காட்சிகள்.",
       sub: "எங்கள் செயல்பாட்டிற்குள் ஒரு பார்வை — தினமும் வரிசைப்படுத்தல், ஏற்றுதல், எடையிடல், மற்றும் தொழில்துறை உலோகங்களின் ஏற்றுமதி.",
       captions: [
-        "தொழில்துறை கசடு ஏற்றல்", "எஃகு உலை செயல்பாடு", "உயர்தர எஃகு சுருள்கள்",
-        "கனரக கிரேன் செயல்பாடு", "வரிசைப்படுத்திய இரும்பு பங்கு", "இயந்திர கசடு முற்றம்",
-        "தொழில்துறை கழிவு கையாளுதல்", "உருகிய எஃகு ஊற்றுதல்",
+        "தொழில்துறை கசடு சேகரிப்பு", "ப்ரீமியம் ஸ்டீல் டர்னிங்ஸ்", "செயலாக்கப்பட்ட இரும்பு கசடு",
+        "கட்டமைப்பு எஃகு கசடு", "மொத்த கசடு சேமிப்பு",
       ],
     },
     contact: {
@@ -450,9 +448,8 @@ export const TRANSLATIONS = {
       h1: "हमारे", h2: "यार्ड", h3: "के दृश्य.",
       sub: "हमारे संचालन के अंदर एक झलक — हर दिन छंटाई, लोडिंग, वजन और औद्योगिक धातुओं की शिपिंग।",
       captions: [
-        "औद्योगिक स्क्रैप लोडिंग", "स्टील भट्ठी संचालन", "प्रीमियम स्टील कॉइल",
-        "भारी क्रेन संचालन", "छंटा हुआ लोहा स्टॉकयार्ड", "मशीनरी स्क्रैप यार्ड",
-        "औद्योगिक अपशिष्ट प्रबंधन", "पिघले स्टील की ढलाई",
+        "औद्योगिक स्क्रैप कलेक्शन", "प्रीमियम स्टील टर्निंग्स", "प्रोसेस्ड आयरन स्क्रैप",
+        "स्ट्रक्चरल स्टील स्क्रैप", "बल्क स्क्रैप स्टोरेज",
       ],
     },
     contact: {

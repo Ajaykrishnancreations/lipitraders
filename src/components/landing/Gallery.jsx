@@ -12,8 +12,6 @@ const Gallery = () => {
     return () => clearInterval(id);
   }, []);
 
-  const captions = t.gallery.captions;
-
   return (
     <section id="gallery" data-testid="gallery-section" className="relative py-24 lg:py-32 bg-[#08090C] overflow-hidden">
       <div className="absolute inset-0 bg-grid opacity-20" />
@@ -49,7 +47,7 @@ const Gallery = () => {
                 className="relative group break-inside-avoid overflow-hidden glass border border-white/10 img-zoom"
                 style={{ aspectRatio: i % 3 === 0 ? "4/5" : i % 3 === 1 ? "1/1" : "5/4" }}
               >
-                <img src={g.src} alt={captions[i] || g.caption} loading="lazy"
+                <img src={g.src} alt={g.caption} loading="lazy"
                   className="absolute inset-0 w-full h-full object-cover" />
                 <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-transparent to-transparent opacity-90"
                   style={{ "--tw-gradient-from": "rgba(0,0,0,0.85)" }} />
@@ -58,7 +56,7 @@ const Gallery = () => {
                     #{String(i + 1).padStart(2, "0")}
                   </div>
                   <div className="font-heading text-xl tracking-wider" style={{ color: "#FFFFFF" }}>
-                    {captions[i] || g.caption}
+                    {g.caption}
                   </div>
                 </div>
               </motion.div>
@@ -74,7 +72,7 @@ const Gallery = () => {
                 animate={{ opacity: active === i ? 1 : 0, scale: active === i ? 1 : 1.05 }}
                 transition={{ duration: 0.8 }} className="absolute inset-0"
               >
-                <img src={g.src} alt={captions[i] || g.caption} className="absolute inset-0 w-full h-full object-cover" />
+                <img src={g.src} alt={g.caption} className="absolute inset-0 w-full h-full object-cover" />
                 <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/30 to-transparent"
                   style={{ "--tw-gradient-from": "rgba(0,0,0,0.85)" }} />
                 <div className="absolute bottom-6 left-6 right-6">
@@ -82,7 +80,7 @@ const Gallery = () => {
                     #{String(i + 1).padStart(2, "0")} / {GALLERY_IMAGES.length}
                   </div>
                   <div className="font-heading text-2xl tracking-wider" style={{ color: "#FFFFFF" }}>
-                    {captions[i] || g.caption}
+                    {g.caption}
                   </div>
                 </div>
               </motion.div>
