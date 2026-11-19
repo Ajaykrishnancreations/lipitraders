@@ -1,5 +1,5 @@
 import React from "react";
-import { Mail, Phone, MapPin, MessageCircle, Instagram, Facebook, Linkedin } from "lucide-react";
+import { Mail, MapPin, MessageCircle, Instagram, Facebook, Linkedin } from "lucide-react";
 import { COMPANY } from "../../data/site";
 import { useLanguage } from "../../hooks/useLanguage";
 
@@ -65,10 +65,6 @@ const Footer = () => {
               <a href={`mailto:${COMPANY.email}`} className="flex gap-3 hover:text-[#FF5722] transition-colors">
                 <Mail className="text-[#FF5722] shrink-0 mt-0.5" size={16} />
                 <span>{COMPANY.email}</span>
-              </a>
-              <a href={`tel:${COMPANY.phoneRaw}`} className="flex gap-3 hover:text-[#FF5722] transition-colors">
-                <Phone className="text-[#FF5722] shrink-0 mt-0.5" size={16} />
-                <span>{COMPANY.phone}</span>
               </a>
               <a href={`https://wa.me/${COMPANY.whatsapp}`} target="_blank" rel="noopener noreferrer"
                 className="inline-flex items-center gap-2 mt-3 bg-[#25D366] text-black px-4 py-2.5 font-heading tracking-[0.2em] text-xs hover:shadow-[0_0_20px_rgba(37,211,102,0.5)] transition-all">

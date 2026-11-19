@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { MapPin, Mail, Phone, MessageCircle, Send, CheckCircle2 } from "lucide-react";
+import { MapPin, Mail, MessageCircle, Send, CheckCircle2 } from "lucide-react";
 import { COMPANY } from "../../data/site";
 import { useLanguage } from "../../hooks/useLanguage";
 import { saveInquiry } from "../../lib/sheets";
@@ -157,25 +157,12 @@ const Contact = () => {
                   </div>
                 </a>
 
-                <a href={`tel:${COMPANY.phoneRaw}`} data-testid="info-phone" className="flex gap-4 group">
-                  <div className="h-10 w-10 shrink-0 grid place-items-center bg-[#FF5722]/10 border border-[#FF5722]/30">
-                    <Phone className="text-[#FF5722]" size={18} />
-                  </div>
-                  <div>
-                    <div className="text-[10px] tracking-[0.3em] uppercase font-semibold text-gray-500 mb-1">{t.contact.infoPhone}</div>
-                    <div className="text-sm text-gray-300 group-hover:text-[#FF5722] transition-colors">{COMPANY.phone}</div>
-                  </div>
-                </a>
               </div>
 
-              <div className="mt-7 grid grid-cols-2 gap-3">
-                <a href={`tel:${COMPANY.phoneRaw}`} data-testid="info-call-btn"
-                  className="inline-flex items-center justify-center gap-2 border border-white/15 text-white px-4 py-3 font-heading tracking-[0.2em] text-xs hover:bg-white hover:text-black transition-all">
-                  <Phone size={14} /> {t.common.call}
-                </a>
+              <div className="mt-7">
                 <a href={`https://wa.me/${COMPANY.whatsapp}`} target="_blank" rel="noopener noreferrer" data-testid="info-whatsapp-btn"
-                  className="inline-flex items-center justify-center gap-2 bg-[#25D366] text-black px-4 py-3 font-heading tracking-[0.2em] text-xs hover:shadow-[0_0_20px_rgba(37,211,102,0.5)] transition-all">
-                  <MessageCircle size={14} /> {t.common.whatsapp}
+                  className="w-full inline-flex items-center justify-center gap-2 bg-[#25D366] text-black px-4 py-4 font-heading tracking-[0.2em] text-sm hover:shadow-[0_0_20px_rgba(37,211,102,0.5)] transition-all">
+                  <MessageCircle size={16} /> {t.footer.chatWhatsapp}
                 </a>
               </div>
             </div>

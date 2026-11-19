@@ -101,6 +101,12 @@ const FAQ_PATTERNS = [
     /पता|कहाँ/i,
     /\b(office\s*enga|kada\s*enga|enga\s*iruka)\b/i,
   ]},
+  { id: "moq", re: [
+    /\b(minimum|min\s*order|moq|b2b|small\s*(quantity|order)|retail|how\s*much\s*minimum)\b/i,
+    /குறைந்தபட்ச/i,
+    /न्यूनतम|कम\s*से\s*कम/i,
+    /\b(minimum\s*evvalavu|kammi\s*quantity)\b/i,
+  ]},
   { id: "contact", re: [
     /\b(contact|phone\s*number|whatsapp|wa\s*number|sivakumar|founder|owner)\b/i,
     /தொடர்பு|தொலைபேசி/i,
@@ -129,8 +135,15 @@ const matches = (patterns, text) => {
 
 export const detectIntent = (text) => {
   // Buy/Sell first
-  const isBuy = matches(BUYER_PATTERNS, text);
-  const isSell = matches(SELLER_PATTERNS, text);
+  let isBuy = matches(BUYER_PATTERNS, text);
+  let isSell = matches(SELLER_PATTERNS, text);
+  // "I want to sell scrap" hits both lists via "want"; an explicit verb decides it.
+  if (isBuy && isSell) {
+    const sellVerb = /\b(sell|selling)\b|बेच|விற்/i.test(text);
+    const buyVerb = /\b(buy|buying|purchase)\b|खरीद|வாங்க/i.test(text);
+    if (sellVerb && !buyVerb) isBuy = false;
+    else if (buyVerb && !sellVerb) isSell = false;
+  }
   if (isBuy && !isSell) return { type: "buy" };
   if (isSell && !isBuy) return { type: "sell" };
   // FAQ
@@ -144,10 +157,16 @@ export const detectIntent = (text) => {
 // ======= STATIC RESPONSES (4 langs) =======
 const R = {
   greeting_open: {
-    en: "Hi 👋 Welcome to LIPI TRADERS.\nHow can I help you today — do you want to **buy** scrap, **sell** scrap, or ask something else?",
-    ta: "வணக்கம் 👋 LIPI TRADERS-க்கு வரவேற்கிறோம்.\nஎப்படி உதவலாம் — scrap **வாங்க** வேண்டுமா, **விற்க** வேண்டுமா, அல்லது வேறு கேள்வி இருக்கா?",
-    hi: "नमस्ते 👋 LIPI TRADERS में आपका स्वागत है।\nमैं कैसे मदद करूँ — scrap **खरीदना** है, **बेचना** है या कुछ और पूछना है?",
-    tanglish: "Hi 👋 LIPI TRADERS ku வரவேற்கிறோம்.\nEpdi help pannalam — scrap **vanga** venuma, **sell** panna venuma, illa vera question iruka?",
+    en: "Hi 👋 Welcome to LIPI TRADERS.\n\n🏭 We are a **B2B (business-to-business)** scrap trader. Minimum order: **10 tons**.\n\nHow can I help you today — do you want to **buy** scrap, **sell** scrap, or ask something else?",
+    ta: "வணக்கம் 👋 LIPI TRADERS-க்கு வரவேற்கிறோம்.\n\n🏭 நாங்கள் **B2B (வணிகத்திலிருந்து வணிகம்)** scrap வர்த்தகர்கள். குறைந்தபட்ச ஆர்டர்: **10 டன்**.\n\nஎப்படி உதவலாம் — scrap **வாங்க** வேண்டுமா, **விற்க** வேண்டுமா, அல்லது வேறு கேள்வி இருக்கா?",
+    hi: "नमस्ते 👋 LIPI TRADERS में आपका स्वागत है।\n\n🏭 हम **B2B (बिज़नेस-टू-बिज़नेस)** scrap ट्रेडर हैं। न्यूनतम ऑर्डर: **10 टन**।\n\nमैं कैसे मदद करूँ — scrap **खरीदना** है, **बेचना** है या कुछ और पूछना है?",
+    tanglish: "Hi 👋 LIPI TRADERS ku வரவேற்கிறோம்.\n\n🏭 Naanga **B2B (business-to-business)** scrap traders. Minimum order: **10 tons**.\n\nEpdi help pannalam — scrap **vanga** venuma, **sell** panna venuma, illa vera question iruka?",
+  },
+  below_min: {
+    en: "Sorry 🙏 We are a B2B company and the **minimum order is 10 tons**.\n\nCan you do 10 tons or more? Please share the quantity in tons.",
+    ta: "மன்னிக்கவும் 🙏 நாங்கள் B2B நிறுவனம், **குறைந்தபட்ச ஆர்டர் 10 டன்**.\n\n10 டன் அல்லது அதற்கு மேல் முடியுமா? quantity-ஐ டன்னில் பகிரவும்.",
+    hi: "माफ़ कीजिए 🙏 हम B2B कंपनी हैं और **न्यूनतम ऑर्डर 10 टन** है।\n\nक्या आप 10 टन या उससे ज़्यादा कर सकते हैं? कृपया मात्रा टन में बताइए।",
+    tanglish: "Sorry 🙏 Naanga B2B company, **minimum order 10 tons**.\n\n10 tons illa adhuku mela mudiyuma? Quantity tons la sollunga.",
   },
   step_name_buy: {
     en: "Yes ✅ We have iron and metal scrap materials available.\n\nPlease tell me your name.",
@@ -162,10 +181,10 @@ const R = {
     tanglish: "Sure ✅ Ella type scrap materials-um vaanguvom.\n\nPlease unga name sollunga.",
   },
   step_contact: {
-    en: "Nice to meet you {name} 😊\n\nPlease share:\n• Phone number\n• WhatsApp number\n• OR Email ID",
-    ta: "சந்தித்ததில் மகிழ்ச்சி {name} 😊\n\nதயவுசெய்து பகிரவும்:\n• Phone number\n• WhatsApp number\n• அல்லது Email ID",
-    hi: "आपसे मिलकर खुशी हुई {name} 😊\n\nकृपया share करें:\n• Phone number\n• WhatsApp number\n• या Email ID",
-    tanglish: "Nice to meet you {name} 😊\n\nPlease share pannunga:\n• Phone number\n• WhatsApp number\n• Illa Email ID",
+    en: "Nice to meet you {name} 😊\n\nPlease share:\n• WhatsApp number\n• OR Email ID",
+    ta: "சந்தித்ததில் மகிழ்ச்சி {name} 😊\n\nதயவுசெய்து பகிரவும்:\n• WhatsApp number\n• அல்லது Email ID",
+    hi: "आपसे मिलकर खुशी हुई {name} 😊\n\nकृपया share करें:\n• WhatsApp number\n• या Email ID",
+    tanglish: "Nice to meet you {name} 😊\n\nPlease share pannunga:\n• WhatsApp number\n• Illa Email ID",
   },
   step_type_buy: {
     en: "Thank you {name} ✅\n\nWhat type of scrap material are you looking for?\n• MS Scrap\n• Iron Scrap\n• Steel Scrap\n• Machinery Scrap\n• Factory Scrap",
@@ -180,16 +199,16 @@ const R = {
     tanglish: "Thank you {name} ✅\n\nEnna type scrap sell panna venum?\n• Iron Scrap\n• Factory Scrap\n• Old Machinery\n• Steel Scrap\n• Metal Waste",
   },
   step_quantity_buy: {
-    en: "Got it 👍\n\nHow much quantity do you need? (kg / ton / bulk quantity)",
-    ta: "புரிந்தது 👍\n\nஎவ்வளவு quantity தேவை? (kg / ton / bulk)",
-    hi: "ठीक है 👍\n\nआपको कितनी मात्रा चाहिए? (kg / ton / bulk)",
-    tanglish: "Got it 👍\n\nEvvalavu quantity venum? (kg / ton / bulk)",
+    en: "Got it 👍\n\nHow many tons do you need? (minimum 10 tons)",
+    ta: "புரிந்தது 👍\n\nஎத்தனை டன் தேவை? (குறைந்தபட்சம் 10 டன்)",
+    hi: "ठीक है 👍\n\nआपको कितने टन चाहिए? (न्यूनतम 10 टन)",
+    tanglish: "Got it 👍\n\nEththanai tons venum? (minimum 10 tons)",
   },
   step_quantity_sell: {
-    en: "Got it 👍\n\nApproximately how much quantity do you have? (kg / ton)",
-    ta: "புரிந்தது 👍\n\nஉங்களிடம் தோராயமாக எவ்வளவு quantity இருக்கிறது? (kg / ton)",
-    hi: "ठीक है 👍\n\nलगभग कितनी मात्रा है आपके पास? (kg / ton)",
-    tanglish: "Got it 👍\n\nUnga kitta approx evvalavu quantity iruku? (kg / ton)",
+    en: "Got it 👍\n\nApproximately how many tons do you have? (minimum 10 tons)",
+    ta: "புரிந்தது 👍\n\nஉங்களிடம் தோராயமாக எத்தனை டன் இருக்கிறது? (குறைந்தபட்சம் 10 டன்)",
+    hi: "ठीक है 👍\n\nलगभग कितने टन हैं आपके पास? (न्यूनतम 10 टन)",
+    tanglish: "Got it 👍\n\nUnga kitta approx eththanai tons iruku? (minimum 10 tons)",
   },
   step_location_buy: {
     en: "Okay 👍\n\nPlease share your delivery location or city.",
@@ -204,16 +223,16 @@ const R = {
     tanglish: "Okay 👍\n\nUnga pickup location / city sollunga.",
   },
   done_buy: {
-    en: "Perfect ✅\n\nOur team will check availability and contact you shortly.\n\nIf urgent, please contact directly:\n📞 Sivakumar (Founder)\n📱 WhatsApp: +91 96555 87877\n📧 sivakumar@lipi-traders.com",
-    ta: "சிறப்பு ✅\n\nஎங்கள் குழு கிடைக்கும் நிலையைச் சரிபார்த்து உங்களை விரைவில் தொடர்பு கொள்ளும்.\n\nஅவசரம் என்றால் நேரடியாகத் தொடர்பு கொள்ளவும்:\n📞 சிவகுமார் (நிறுவனர்)\n📱 WhatsApp: +91 96555 87877\n📧 sivakumar@lipi-traders.com",
-    hi: "बहुत बढ़िया ✅\n\nहमारी टीम availability चेक करके आपसे जल्द संपर्क करेगी।\n\nज़रूरी हो तो सीधे संपर्क करें:\n📞 शिवकुमार (संस्थापक)\n📱 WhatsApp: +91 96555 87877\n📧 sivakumar@lipi-traders.com",
-    tanglish: "Perfect ✅\n\nEnga team availability check panni udane contact pannuvanga.\n\nUrgent na direct ah contact pannunga:\n📞 Sivakumar (Founder)\n📱 WhatsApp: +91 96555 87877\n📧 sivakumar@lipi-traders.com",
+    en: "Perfect ✅\n\nOur team will check availability and contact you shortly.\n\nIf urgent, message us on WhatsApp (green button above) or email:\n📧 sivakumar@lipi-traders.com",
+    ta: "சிறப்பு ✅\n\nஎங்கள் குழு கிடைக்கும் நிலையைச் சரிபார்த்து உங்களை விரைவில் தொடர்பு கொள்ளும்.\n\nஅவசரம் என்றால் WhatsApp-ல் (மேலே உள்ள பச்சை பட்டன்) அல்லது email-ல் தொடர்பு கொள்ளவும்:\n📧 sivakumar@lipi-traders.com",
+    hi: "बहुत बढ़िया ✅\n\nहमारी टीम availability चेक करके आपसे जल्द संपर्क करेगी।\n\nज़रूरी हो तो WhatsApp (ऊपर हरा बटन) या email पर संपर्क करें:\n📧 sivakumar@lipi-traders.com",
+    tanglish: "Perfect ✅\n\nEnga team availability check panni udane contact pannuvanga.\n\nUrgent na WhatsApp (mela green button) illa email la contact pannunga:\n📧 sivakumar@lipi-traders.com",
   },
   done_sell: {
-    en: "Thank you {name} ✅\n\nOur team will contact you shortly for pricing and pickup details.\n\nDirect contact:\n📞 +91 96555 87877",
-    ta: "நன்றி {name} ✅\n\nஎங்கள் குழு pricing மற்றும் pickup details-ஐப் பகிர விரைவில் உங்களைத் தொடர்பு கொள்ளும்.\n\nநேரடி தொடர்பு:\n📞 +91 96555 87877",
-    hi: "धन्यवाद {name} ✅\n\nहमारी टीम pricing और pickup के लिए जल्द संपर्क करेगी।\n\nसीधा संपर्क:\n📞 +91 96555 87877",
-    tanglish: "Thank you {name} ✅\n\nEnga team pricing and pickup details ku udane contact pannuvanga.\n\nDirect contact:\n📞 +91 96555 87877",
+    en: "Thank you {name} ✅\n\nOur team will contact you shortly for pricing and pickup details.\n\nYou can also message us on WhatsApp (green button above).",
+    ta: "நன்றி {name} ✅\n\nஎங்கள் குழு pricing மற்றும் pickup details-ஐப் பகிர விரைவில் உங்களைத் தொடர்பு கொள்ளும்.\n\nWhatsApp-லும் (மேலே உள்ள பச்சை பட்டன்) தொடர்பு கொள்ளலாம்.",
+    hi: "धन्यवाद {name} ✅\n\nहमारी टीम pricing और pickup के लिए जल्द संपर्क करेगी।\n\nआप WhatsApp (ऊपर हरा बटन) पर भी संदेश भेज सकते हैं।",
+    tanglish: "Thank you {name} ✅\n\nEnga team pricing and pickup details ku udane contact pannuvanga.\n\nWhatsApp la (mela green button) message um pannalam.",
   },
   reask_name: {
     en: "Could you please tell me your name to continue?",
@@ -222,20 +241,20 @@ const R = {
     tanglish: "Unga name konjam sollunga, continue pannuvom?",
   },
   reask_contact: {
-    en: "I need a phone, WhatsApp number or email to forward your request to Sivakumar. Please share any one 😊",
-    ta: "உங்கள் கோரிக்கையை சிவகுமாருக்கு அனுப்ப ஒரு phone, WhatsApp number அல்லது email தேவை. ஏதேனும் ஒன்றைப் பகிரவும் 😊",
-    hi: "आपकी request शिवकुमार जी तक भेजने के लिए phone, WhatsApp या email चाहिए। कोई एक share कीजिए 😊",
-    tanglish: "Unga request Sivakumar sir ku anupa oru phone, WhatsApp illa email venum. Edhuvachum onnu share pannunga 😊",
+    en: "I need a WhatsApp number or email to forward your request to Sivakumar. Please share any one 😊",
+    ta: "உங்கள் கோரிக்கையை சிவகுமாருக்கு அனுப்ப ஒரு WhatsApp number அல்லது email தேவை. ஏதேனும் ஒன்றைப் பகிரவும் 😊",
+    hi: "आपकी request शिवकुमार जी तक भेजने के लिए WhatsApp number या email चाहिए। कोई एक share कीजिए 😊",
+    tanglish: "Unga request Sivakumar sir ku anupa oru WhatsApp number illa email venum. Edhuvachum onnu share pannunga 😊",
   },
   reask_type: { en: "Which scrap material exactly — Iron, MS, Steel, Machinery or Factory waste?",
     ta: "எந்த scrap material — Iron, MS, Steel, Machinery அல்லது Factory waste?",
     hi: "कौन सा scrap — Iron, MS, Steel, Machinery या Factory waste?",
     tanglish: "Enna scrap exactly — Iron, MS, Steel, Machinery illa Factory waste?",
   },
-  reask_quantity: { en: "Roughly what quantity? (e.g. 500 kg, 2 tons, bulk)",
-    ta: "தோராயமாக எவ்வளவு quantity? (e.g. 500 kg, 2 tons, bulk)",
-    hi: "लगभग कितनी मात्रा? (e.g. 500 kg, 2 tons, bulk)",
-    tanglish: "Roughly evvalavu quantity? (e.g. 500 kg, 2 tons, bulk)",
+  reask_quantity: { en: "Roughly how many tons? (minimum 10 tons — e.g. 10 tons, 25 tons, bulk)",
+    ta: "தோராயமாக எத்தனை டன்? (குறைந்தபட்சம் 10 டன் — e.g. 10 tons, 25 tons, bulk)",
+    hi: "लगभग कितने टन? (न्यूनतम 10 टन — e.g. 10 tons, 25 tons, bulk)",
+    tanglish: "Roughly eththanai tons? (minimum 10 tons — e.g. 10 tons, 25 tons, bulk)",
   },
   reask_location: { en: "Which city or area should we pick up / deliver to?",
     ta: "எந்த நகரம் / பகுதியிலிருந்து pickup / delivery வேண்டும்?",
@@ -250,10 +269,16 @@ const R = {
   // FAQ short answers used during flow detours
   faq: {
     pricing: {
-      en: "Scrap rates change daily with market & material grade. Share your phone/WhatsApp and our team will send today's exact rate.",
-      ta: "Scrap விலை சந்தை & தரத்துக்கேற்ப தினமும் மாறும். Phone/WhatsApp பகிர்ந்தால் இன்றைய ரேட்டை எங்கள் குழு அனுப்பும்.",
-      hi: "Scrap के रेट रोज़ बदलते हैं (बाज़ार और ग्रेड के अनुसार)। Phone/WhatsApp share करें, हमारी टीम आज का रेट भेज देगी।",
-      tanglish: "Rate market and grade based ah daily change aagum. Phone/WhatsApp share pannina today rate enga team anupp uvanga.",
+      en: "Scrap rates change daily with market & material grade. Share your WhatsApp number and our team will send today's exact rate. (B2B only · minimum 10 tons)",
+      ta: "Scrap விலை சந்தை & தரத்துக்கேற்ப தினமும் மாறும். WhatsApp number பகிர்ந்தால் இன்றைய ரேட்டை எங்கள் குழு அனுப்பும். (B2B மட்டும் · குறைந்தபட்சம் 10 டன்)",
+      hi: "Scrap के रेट रोज़ बदलते हैं (बाज़ार और ग्रेड के अनुसार)। WhatsApp number share करें, हमारी टीम आज का रेट भेज देगी। (केवल B2B · न्यूनतम 10 टन)",
+      tanglish: "Rate market and grade based ah daily change aagum. WhatsApp number share pannina today rate enga team anuppuvanga. (B2B only · minimum 10 tons)",
+    },
+    moq: {
+      en: "🏭 LIPI TRADERS is a **B2B (business-to-business)** company.\nWe deal only in bulk — the **minimum order is 10 tons**.",
+      ta: "🏭 LIPI TRADERS ஒரு **B2B (வணிகத்திலிருந்து வணிகம்)** நிறுவனம்.\nநாங்கள் மொத்த அளவில் மட்டுமே வர்த்தகம் செய்கிறோம் — **குறைந்தபட்ச ஆர்டர் 10 டன்**.",
+      hi: "🏭 LIPI TRADERS एक **B2B (बिज़नेस-टू-बिज़नेस)** कंपनी है।\nहम केवल bulk में काम करते हैं — **न्यूनतम ऑर्डर 10 टन** है।",
+      tanglish: "🏭 LIPI TRADERS oru **B2B (business-to-business)** company.\nNaanga bulk la mattum deal pannuvom — **minimum order 10 tons**.",
     },
     gst: {
       en: "We offer both GST and non-GST billing ✅",
@@ -274,16 +299,16 @@ const R = {
       tanglish: "📍 LIPI TRADERS, 214/1P, Anjugam Nagar, Chinnavedampatti, Coimbatore – 641049",
     },
     contact: {
-      en: "📞 Sivakumar (Founder): +91 96555 87877\n💬 WhatsApp: +91 96555 87877\n📧 sivakumar@lipi-traders.com",
-      ta: "📞 சிவகுமார் (நிறுவனர்): +91 96555 87877\n💬 WhatsApp: +91 96555 87877\n📧 sivakumar@lipi-traders.com",
-      hi: "📞 शिवकुमार (संस्थापक): +91 96555 87877\n💬 WhatsApp: +91 96555 87877\n📧 sivakumar@lipi-traders.com",
-      tanglish: "📞 Sivakumar sir: +91 96555 87877\n💬 WhatsApp: +91 96555 87877\n📧 sivakumar@lipi-traders.com",
+      en: "💬 Message us on WhatsApp — tap the green WhatsApp button above.\n📧 sivakumar@lipi-traders.com",
+      ta: "💬 WhatsApp-ல் தொடர்பு கொள்ள மேலே உள்ள பச்சை WhatsApp பட்டனை அழுத்தவும்.\n📧 sivakumar@lipi-traders.com",
+      hi: "💬 WhatsApp पर संदेश भेजें — ऊपर हरे WhatsApp बटन पर टैप करें।\n📧 sivakumar@lipi-traders.com",
+      tanglish: "💬 WhatsApp la message panna mela irukura green WhatsApp button ah tap pannunga.\n📧 sivakumar@lipi-traders.com",
     },
     hours: {
-      en: "🕘 Mon–Sat, 9 AM – 7 PM. Sundays by appointment.",
-      ta: "🕘 திங்கள்–சனி, காலை 9 – மாலை 7. ஞாயிறு appointment.",
-      hi: "🕘 सोम–शनि, सुबह 9 – शाम 7. रविवार appointment से.",
-      tanglish: "🕘 Monday–Saturday, காலை 9 – மாலை 7. Sunday appointment.",
+      en: "🕘 Open all 7 days (Mon–Sun), 8 AM – 6 PM.",
+      ta: "🕘 வாரத்தின் 7 நாட்களும் (திங்கள்–ஞாயிறு), காலை 8 – மாலை 6.",
+      hi: "🕘 सातों दिन खुला (सोम–रवि), सुबह 8 – शाम 6.",
+      tanglish: "🕘 7 days open (Monday–Sunday), காலை 8 – மாலை 6.",
     },
     materials: {
       en: "We handle: Iron · Steel/MS · Machinery · Factory Waste · Industrial Metal · Heavy Equipment · Cast Iron · GI Sheets.",
@@ -298,17 +323,17 @@ const R = {
       tanglish: "Hi 👋 Epdi help pannalam — scrap **vanga** venuma illa **sell** panna venuma?",
     },
     thanks: {
-      en: "You're welcome! 🙏 For urgent help: +91 96555 87877.",
-      ta: "வரவேற்கிறேன்! 🙏 அவசரத்துக்கு: +91 96555 87877.",
-      hi: "स्वागत है! 🙏 ज़रूरी हो तो: +91 96555 87877.",
-      tanglish: "Nandri! 🙏 Urgent na: +91 96555 87877.",
+      en: "You're welcome! 🙏 For urgent help, message us on WhatsApp.",
+      ta: "வரவேற்கிறேன்! 🙏 அவசரத்துக்கு WhatsApp-ல் தொடர்பு கொள்ளவும்.",
+      hi: "स्वागत है! 🙏 ज़रूरी हो तो WhatsApp पर संदेश भेजें।",
+      tanglish: "Nandri! 🙏 Urgent na WhatsApp la message pannunga.",
     },
   },
   unknown: {
-    en: "I'll help you with that 😊\n\nPlease share your phone or WhatsApp number — our team will contact you shortly.",
-    ta: "அதற்கு உதவுகிறேன் 😊\n\nதயவுசெய்து உங்கள் phone அல்லது WhatsApp number பகிரவும் — எங்கள் குழு விரைவில் தொடர்பு கொள்ளும்.",
-    hi: "मैं उसमें मदद करूँगा 😊\n\nकृपया phone या WhatsApp number share करें — हमारी टीम जल्द संपर्क करेगी।",
-    tanglish: "Adhuku help pannuren 😊\n\nUnga phone illa WhatsApp number share pannunga — enga team udane contact pannuvanga.",
+    en: "I'll help you with that 😊\n\nPlease share your WhatsApp number — our team will contact you shortly.",
+    ta: "அதற்கு உதவுகிறேன் 😊\n\nதயவுசெய்து உங்கள் WhatsApp number பகிரவும் — எங்கள் குழு விரைவில் தொடர்பு கொள்ளும்.",
+    hi: "मैं उसमें मदद करूँगा 😊\n\nकृपया अपना WhatsApp number share करें — हमारी टीम जल्द संपर्क करेगी।",
+    tanglish: "Adhuku help pannuren 😊\n\nUnga WhatsApp number share pannunga — enga team udane contact pannuvanga.",
   },
 };
 
@@ -324,7 +349,8 @@ export const STARTER_CHIPS = {
     { label: "🚚 Pickup", text: "Do you offer pickup?" },
     { label: "🧾 GST", text: "Do you provide GST bill?" },
     { label: "📍 Location", text: "Where is your office?" },
-    { label: "📞 Contact", text: "Share Sivakumar's contact" },
+    { label: "🏭 Min. Order", text: "What is the minimum order?" },
+    { label: "💬 WhatsApp", text: "How do I contact you on WhatsApp?" },
   ],
   ta: [
     { label: "🛒 வாங்க", text: "எனக்கு scrap வேண்டும்" },
@@ -333,7 +359,8 @@ export const STARTER_CHIPS = {
     { label: "🚚 பிக்கப்", text: "பிக்கப் இருக்கா?" },
     { label: "🧾 GST", text: "GST பில் கொடுப்பீங்களா?" },
     { label: "📍 முகவரி", text: "உங்க office எங்கே?" },
-    { label: "📞 தொடர்பு", text: "சிவகுமார் number கொடுங்க" },
+    { label: "🏭 குறைந்தபட்ச ஆர்டர்", text: "குறைந்தபட்ச ஆர்டர் எவ்வளவு?" },
+    { label: "💬 WhatsApp", text: "WhatsApp-ல் எப்படி தொடர்பு கொள்வது?" },
   ],
   hi: [
     { label: "🛒 खरीदें", text: "मुझे scrap खरीदना है" },
@@ -342,7 +369,8 @@ export const STARTER_CHIPS = {
     { label: "🚚 पिकअप", text: "क्या pickup मिलता है?" },
     { label: "🧾 GST", text: "क्या GST बिल देते हैं?" },
     { label: "📍 पता", text: "आपका office कहाँ है?" },
-    { label: "📞 संपर्क", text: "शिवकुमार जी का नंबर दें" },
+    { label: "🏭 न्यूनतम ऑर्डर", text: "न्यूनतम ऑर्डर कितना है?" },
+    { label: "💬 WhatsApp", text: "WhatsApp पर कैसे संपर्क करें?" },
   ],
   tanglish: [
     { label: "🛒 Vanga", text: "Enaku scrap vanga venum" },
@@ -351,14 +379,15 @@ export const STARTER_CHIPS = {
     { label: "🚚 Pickup", text: "Pickup iruka?" },
     { label: "🧾 GST", text: "GST bill kudupeengala?" },
     { label: "📍 Address", text: "Unga office enga iruku?" },
-    { label: "📞 Contact", text: "Sivakumar sir number kudunga" },
+    { label: "🏭 Min. Order", text: "Minimum order evvalavu?" },
+    { label: "💬 WhatsApp", text: "WhatsApp la epdi contact pannradhu?" },
   ],
 };
 
 // Step-specific chips
 export const STEP_CHIPS = {
   ASK_TYPE: ["MS Scrap", "Iron Scrap", "Steel Scrap", "Machinery", "Factory Waste"],
-  ASK_QUANTITY: ["500 kg", "1 ton", "5 tons", "10+ tons", "Bulk"],
+  ASK_QUANTITY: ["10 tons", "20 tons", "50 tons", "100+ tons", "Bulk"],
 };
 
 // ======= SESSION =======
@@ -521,6 +550,11 @@ export const processInput = (userText, session) => {
         chips = STEP_CHIPS.ASK_QUANTITY;
         break;
       }
+      if (isBelowMinimum(text)) {
+        reply = R.below_min[rk];
+        chips = STEP_CHIPS.ASK_QUANTITY;
+        break;
+      }
       s.quantity = cleanShort(text);
       s.state = "ASK_LOCATION";
       reply = s.intent === "sell" ? R.step_location_sell[rk] : R.step_location_buy[rk];
@@ -571,6 +605,18 @@ const QTY_WORDS = /\b(kg|kgs|ton|tons|tonne|tonnes|quintal|bulk|small|large|truc
 const looksLikeScrapType = (t) => SCRAP_WORDS.test(t);
 const looksLikeQuantity = (t) => QTY_WORDS.test(t);
 const looksLikeLocation = (t) => /\b(coimbatore|chennai|madurai|salem|tirupur|erode|trichy|bangalore|hyderabad|hosur|pollachi|near|district|city|town|nagar|tamil\s*nadu|kerala|karnataka)\b/i.test(t) || t.length >= 3;
+
+// B2B minimum order: 10 tons. Returns true only when the quantity is clearly below it.
+const MIN_TONS = 10;
+const isBelowMinimum = (t) => {
+  if (/\b(bulk|truckload|large)\b|\+/i.test(t)) return false;
+  const m = t.match(/(\d+(?:\.\d+)?)\s*(kg|kgs|kilo|kilos|quintal|quintals|ton|tons|tonne|tonnes|t)?\b/i);
+  if (!m) return false;
+  const n = parseFloat(m[1]);
+  const unit = (m[2] || "ton").toLowerCase();
+  const tons = unit.startsWith("k") ? n / 1000 : unit.startsWith("q") ? n / 10 : n;
+  return tons < MIN_TONS;
+};
 
 const cleanShort = (t) => t.replace(/\s+/g, " ").trim().slice(0, 120);
 

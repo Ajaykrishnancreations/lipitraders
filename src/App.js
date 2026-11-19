@@ -14,6 +14,7 @@ import Footer from "./components/landing/Footer";
 import WhatsAppFab from "./components/landing/WhatsAppFab";
 import LanguagePrompt from "./components/landing/LanguagePrompt";
 import ChatbotFab from "./components/landing/ChatbotFab";
+import WhatsAppConfirm from "./components/landing/WhatsAppConfirm";
 
 function App() {
   // Ensure theme attr present (pre-set by inline script in index.html for no-flash)
@@ -40,6 +41,7 @@ function App() {
         <WhatsAppFab />
         <ChatbotFab />
         <LanguagePrompt />
+        <WhatsAppConfirm />
       </div>
     </LanguageProvider>
   );

@@ -18,8 +18,6 @@ export const COMPANY = {
   address:
     "214/1P, Anjugam Nagar, Chinnavedampatti, Coimbatore – 641049",
   email: "sivakumar@lipi-traders.com, kumarsivakumar158@gmail.com",
-  phone: "+91 96555 87877",
-  phoneRaw: "+919655587877",
   whatsapp: "919655587877",
   mapsEmbed:
     "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3914.0!2d76.99!3d11.05!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2sLipi+Traders+Coimbatore!5e0!3m2!1sen!2sin",

@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { Menu, X, Phone } from "lucide-react";
+import { Menu, X, MessageCircle } from "lucide-react";
 import { COMPANY } from "../../data/site";
 import { useLanguage } from "../../hooks/useLanguage";
 import SettingsMenu from "./SettingsMenu";
@@ -97,11 +97,13 @@ const Navbar = () => {
         <div className="flex items-center gap-3">
           <SettingsMenu variant="desktop" />
           <a
-            href={`tel:${COMPANY.phoneRaw}`}
-            data-testid="nav-call-btn"
-            className="hidden md:inline-flex items-center gap-2 px-5 py-3 bg-gradient-to-r from-[#FF5722] to-[#E64A19] text-white text-xs font-heading tracking-[0.2em] hover:shadow-[0_0_24px_rgba(255,87,34,0.55)] hover:-translate-y-0.5 transition-all"
+            href={`https://wa.me/${COMPANY.whatsapp}`}
+            target="_blank"
+            rel="noopener noreferrer"
+            data-testid="nav-whatsapp-btn"
+            className="hidden md:inline-flex items-center gap-2 px-5 py-3 bg-[#25D366] text-black text-xs font-heading tracking-[0.2em] hover:shadow-[0_0_24px_rgba(37,211,102,0.55)] hover:-translate-y-0.5 transition-all"
           >
-            <Phone size={14} /> {t.nav.callNow}
+            <MessageCircle size={14} /> {t.common.whatsapp}
           </a>
           <button
             onClick={() => setOpen(!open)}
@@ -144,11 +146,13 @@ const Navbar = () => {
                 </motion.a>
               ))}
               <a
-                href={`tel:${COMPANY.phoneRaw}`}
-                data-testid="nav-mobile-call"
-                className="mt-4 inline-flex items-center justify-center gap-2 bg-gradient-to-r from-[#FF5722] to-[#E64A19] text-white py-4 font-heading tracking-[0.2em] hover:shadow-[0_0_24px_rgba(255,87,34,0.55)]"
+                href={`https://wa.me/${COMPANY.whatsapp}`}
+                target="_blank"
+                rel="noopener noreferrer"
+                data-testid="nav-mobile-whatsapp"
+                className="mt-4 inline-flex items-center justify-center gap-2 bg-[#25D366] text-black py-4 font-heading tracking-[0.2em] hover:shadow-[0_0_24px_rgba(37,211,102,0.55)]"
               >
-                <Phone size={16} /> {t.nav.callNow} · {COMPANY.phone}
+                <MessageCircle size={16} /> {t.footer.chatWhatsapp}
               </a>
               <div className="mt-3 flex items-center justify-center">
                 <SettingsMenu variant="mobile" />

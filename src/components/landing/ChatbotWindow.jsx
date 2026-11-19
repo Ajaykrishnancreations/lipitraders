@@ -1,6 +1,6 @@
 import React, { useEffect, useRef, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { X, Send, User, Phone, MessageCircle, RotateCcw } from "lucide-react";
+import { X, Send, User, MessageCircle, RotateCcw } from "lucide-react";
 import { COMPANY } from "../../data/site";
 import { useLanguage } from "../../hooks/useLanguage";
 import { processInput, initSession, STARTER_CHIPS, BOT_INTRO } from "../../chat/engine";
@@ -163,10 +163,6 @@ const ChatbotWindow = ({ open, onClose }) => {
                 className="p-2 text-[#25D366] hover:bg-[#25D366]/10 transition-colors rounded">
                 <MessageCircle size={16} />
               </a>
-              <a href={`tel:${COMPANY.phoneRaw}`} aria-label="Call" data-testid="chat-call"
-                className="p-2 text-[color:var(--accent-orange)] hover:bg-[color:var(--accent-orange)]/10 transition-colors rounded">
-                <Phone size={16} />
-              </a>
               <button onClick={onClose} aria-label="Close chat" data-testid="chat-close"
                 className="p-2 text-[color:var(--text-secondary)] hover:text-[color:var(--accent-orange)] transition-colors">
                 <X size={18} />
@@ -264,11 +260,19 @@ const MessageBubble = ({ msg }) => {
             : "bg-gradient-to-br from-[#FF5722] to-[#E64A19] text-white rounded-l-xl rounded-tr-xl"
         }`}
       >
-        {msg.text}
+        {isBot ? renderBold(msg.text) : msg.text}
       </div>
     </motion.div>
   );
 };
+
+// Bot replies use **bold** markers; render them as <strong> instead of literal asterisks.
+const renderBold = (text) =>
+  String(text || "")
+    .split(/(\*\*[^*]+\*\*)/g)
+    .map((part, i) =>
+      part.startsWith("**") && part.endsWith("**") ? <strong key={i}>{part.slice(2, -2)}</strong> : part
+    );
 
 const TypingDots = () => (
   <div className="flex items-end gap-2">
