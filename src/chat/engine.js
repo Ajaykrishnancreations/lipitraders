@@ -223,10 +223,10 @@ const R = {
     tanglish: "Okay 👍\n\nUnga pickup location / city sollunga.",
   },
   done_buy: {
-    en: "Perfect ✅\n\nOur team will check availability and contact you shortly.\n\nIf urgent, message us on WhatsApp (green button above) or email:\n📧 sivakumar@lipi-traders.com",
-    ta: "சிறப்பு ✅\n\nஎங்கள் குழு கிடைக்கும் நிலையைச் சரிபார்த்து உங்களை விரைவில் தொடர்பு கொள்ளும்.\n\nஅவசரம் என்றால் WhatsApp-ல் (மேலே உள்ள பச்சை பட்டன்) அல்லது email-ல் தொடர்பு கொள்ளவும்:\n📧 sivakumar@lipi-traders.com",
-    hi: "बहुत बढ़िया ✅\n\nहमारी टीम availability चेक करके आपसे जल्द संपर्क करेगी।\n\nज़रूरी हो तो WhatsApp (ऊपर हरा बटन) या email पर संपर्क करें:\n📧 sivakumar@lipi-traders.com",
-    tanglish: "Perfect ✅\n\nEnga team availability check panni udane contact pannuvanga.\n\nUrgent na WhatsApp (mela green button) illa email la contact pannunga:\n📧 sivakumar@lipi-traders.com",
+    en: "Perfect ✅\n\nOur team will check availability and contact you shortly.\n\nIf urgent, message us on WhatsApp (green button above) or email:\n📧 kumarsivakumar158@gmail.com",
+    ta: "சிறப்பு ✅\n\nஎங்கள் குழு கிடைக்கும் நிலையைச் சரிபார்த்து உங்களை விரைவில் தொடர்பு கொள்ளும்.\n\nஅவசரம் என்றால் WhatsApp-ல் (மேலே உள்ள பச்சை பட்டன்) அல்லது email-ல் தொடர்பு கொள்ளவும்:\n📧 kumarsivakumar158@gmail.com",
+    hi: "बहुत बढ़िया ✅\n\nहमारी टीम availability चेक करके आपसे जल्द संपर्क करेगी।\n\nज़रूरी हो तो WhatsApp (ऊपर हरा बटन) या email पर संपर्क करें:\n📧 kumarsivakumar158@gmail.com",
+    tanglish: "Perfect ✅\n\nEnga team availability check panni udane contact pannuvanga.\n\nUrgent na WhatsApp (mela green button) illa email la contact pannunga:\n📧 kumarsivakumar158@gmail.com",
   },
   done_sell: {
     en: "Thank you {name} ✅\n\nOur team will contact you shortly for pricing and pickup details.\n\nYou can also message us on WhatsApp (green button above).",
@@ -299,10 +299,10 @@ const R = {
       tanglish: "📍 LIPI TRADERS, 214/1P, Anjugam Nagar, Chinnavedampatti, Coimbatore – 641049",
     },
     contact: {
-      en: "💬 Message us on WhatsApp — tap the green WhatsApp button above.\n📧 sivakumar@lipi-traders.com",
-      ta: "💬 WhatsApp-ல் தொடர்பு கொள்ள மேலே உள்ள பச்சை WhatsApp பட்டனை அழுத்தவும்.\n📧 sivakumar@lipi-traders.com",
-      hi: "💬 WhatsApp पर संदेश भेजें — ऊपर हरे WhatsApp बटन पर टैप करें।\n📧 sivakumar@lipi-traders.com",
-      tanglish: "💬 WhatsApp la message panna mela irukura green WhatsApp button ah tap pannunga.\n📧 sivakumar@lipi-traders.com",
+      en: "💬 Message us on WhatsApp — tap the green WhatsApp button above.\n📧 kumarsivakumar158@gmail.com",
+      ta: "💬 WhatsApp-ல் தொடர்பு கொள்ள மேலே உள்ள பச்சை WhatsApp பட்டனை அழுத்தவும்.\n📧 kumarsivakumar158@gmail.com",
+      hi: "💬 WhatsApp पर संदेश भेजें — ऊपर हरे WhatsApp बटन पर टैप करें।\n📧 kumarsivakumar158@gmail.com",
+      tanglish: "💬 WhatsApp la message panna mela irukura green WhatsApp button ah tap pannunga.\n📧 kumarsivakumar158@gmail.com",
     },
     hours: {
       en: "🕘 Open all 7 days (Mon–Sun), 8 AM – 6 PM.",
